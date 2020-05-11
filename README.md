@@ -26,8 +26,8 @@ To quickly connect to new VM by use: ```virsh console rhel8```.
 I drop some dummy password for root, and ssh-key for cloud-user. Change them to
 yours, they are in kickstart files. See variables:
 
-* ** rootpw **: Put your encrypted password here. E.g: ```openssl passwd -6 foobar```
-* ** sshkey **: Your SSH publi key, so you can ssh to machine after it boots.
+* **rootpw**: Put your encrypted password here. E.g: ```openssl passwd -6 foobar```
+* **sshkey**: Your SSH publi key, so you can ssh to machine after it boots.
 
 # Fedora
 
