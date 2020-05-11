@@ -82,7 +82,11 @@ virt-install --name centos8 \
 -x "https://github.com/ikke-t/virt-installs/raw/master/ks-rhel8.cfg console=tty0 console=ttyS0,115200n8"
 ```
 
-# RHEL8, you need to have your own repo mirror.
+# RHEL8
+
+You need to have your own repo mirror. For example you could download the
+install DVD and mount it somewhere as loop device, and share the rpm contents
+with lighttpd container.
 
 ```
 virt-install --name rhel8 \
