@@ -11,6 +11,17 @@ If you want to do more complicated setups, here is an example how I create VMs
 for [OpenShift clusters using libvirt through
 Ansible](https://github.com/ikke-t/ocp-libvirt-infra-ansibles).
 
+# Connecting to VM
+
+I use ssh to connect to VM's, like ```ssh cloud-user@ip```.
+
+I use virsh to control VMs on command line. And
+[virt-manager](https://virt-manager.org/) or
+[cockpit](https://cockpit-project.org/) for GUI.
+
+To quickly connect to new VM by use: ```virsh console rhel8```.
+
+
 # Fedora
 
 ## If I want to try beta:
