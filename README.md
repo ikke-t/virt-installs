@@ -148,8 +148,8 @@ virt-install --name rhel-edge \
   --extra-args="ks=file:/ks.cfg console=tty0 console=ttyS0,115200n8"
 ```
 
-After install of edge I typically switch it into virbr0 network. It doesn't
-seem to be able to route to podman container in user namespace from virtual
-machine in user name space too. If you run the both as root, perhaps it
-would work with option ```--network bridge=virbr0```.
+After install of edge I typically switch it into virbr0 network. I noticed
+It doesn't seem to be able to route to podman container in user namespace
+from virtual machine in libvirt default network virbr0. If you run the both as
+root, perhaps it would work with option ```--network bridge=virbr0```.
 
