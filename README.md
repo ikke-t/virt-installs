@@ -122,4 +122,34 @@ virt-install --name rhel8 \
 -x "ks=https://github.com/ikke-t/virt-installs/raw/master/ks-rhel8.cfg console=tty0 console=ttyS0,115200n8"
 ```
 
+# RHEL8-Edge
+
+You need to have your own rpm-ostree built. See
+[instructions how to build one](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html-single/composing_installing_and_managing_rhel_for_edge_images/index).
+Once you have built, downlaoded and extracted it, you can host it e.g.
+with lighttpd container:
+
+```
+podman run -ti --name lighttpd --rm -v "~/rhel-iot/:/var/www/localhost/htdocs:Z" -p 8080:80 sebp/lighttpd
+```
+
+Modify the local kickstart file to have your passwords, and your host's IP
+address in the url, and start the install from extracted RHEL DVD repo:
+
+```
+virt-install --name rhel-edge \
+  --description 'RHEL 8 Edge' \
+  --memory 4096 \
+  --vcpus 4 \
+  --disk ~/VirtualMachines/rhel-edge.qcow2,size=8 \
+  --os-variant rhel8.3 \
+  --location http://download-node-02.eng.bos.redhat.com/rhel-8/rel-eng/RHEL-8/latest-RHEL-8/compose/BaseOS/x86_64/os/ \
+  --initrd-inject=/home/ikke/rhel-iot/ks.cfg \
+  --extra-args="ks=file:/ks.cfg console=tty0 console=ttyS0,115200n8"
+```
+
+After install of edge I typically switch it into virbr0 network. It doesn't
+seem to be able to route to podman container in user namespace from virtual
+machine in user name space too. If you run the both as root, perhaps it
+would work with option ```--network bridge=virbr0```.
 
