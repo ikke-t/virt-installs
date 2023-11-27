@@ -1,0 +1,15 @@
+
+
+variant: fcos
+version: 1.4.0
+passwd:
+  users:
+    - name: core
+      ssh_authorized_keys:
+        - ssh-rsa AAAA...
+storage:
+  files:
+    - path: /etc/hostname
+      mode: 0644
+      contents:
+        inline: fcos

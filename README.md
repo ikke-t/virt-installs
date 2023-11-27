@@ -41,10 +41,6 @@ sometimes, for such have such lines at the end:
 
 # Fedora
 
-For CoreOS,
-[see their commands](https://docs.fedoraproject.org/en-US/fedora-coreos/provisioning-libvirt/).
-for the others see below.
-
 ## If I want to try beta:
 
 ```
@@ -134,6 +130,33 @@ virt-install --name rhel8 \
 --console pty,target.type=virtio \
 -l http://download-node-02.eng.bos.redhat.com/rhel-8/rel-eng/RHEL-8/latest-RHEL-8/compose/BaseOS/x86_64/os/ \
 -x "inst.ks=https://github.com/ikke-t/virt-installs/raw/master/ks-rhel8.cfg console=tty0 console=ttyS0,115200n8"
+```
+
+# Fedora CoreOS
+
+For CoreOS,
+[see their doc](https://docs.fedoraproject.org/en-US/fedora-coreos/provisioning-libvirt/).
+
+1. Get FCOS image
+coreos-installer download -s "${STREAM}" -p qemu -f qcow2.xz --decompress -C ~/VirtualMachines
+
+2. Create ignition file ([see sample](./fcos.yml)):
+
+```
+butane --pretty --strict fcos.yml > fcos.ign
+```
+
+3. Install
+```
+virt-install --name=fcos \
+  --vcpus=2 \
+  --memory=4096 \
+  --os-variant="fedora-coreos-stable" \
+  --import \
+  --graphics=none \
+  --disk backing_store=/home/itengval/VirtualMachines/fcos.qcow2,size=10 \
+  --network bridge=virbr0 \
+  --qemu-commandline="-fw_cfg name=opt/com.coreos/config,file=/home/itengval/VirtualMachines/fcos.ign"
 ```
 
 # RHEL8-Edge
