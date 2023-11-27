@@ -29,57 +29,67 @@ yours, they are in kickstart files. See variables:
 * **rootpw**: Put your encrypted password here. E.g: ```openssl passwd -6 foobar```
 * **sshkey**: Your SSH publi key, so you can ssh to machine after it boots.
 
+# Kickstart
+
+The below commands use http to get kickstart. Also local kickstart is good
+sometimes, for such have such lines at the end:
+
+```
+--initrd-inject=/var/home/itengval/src/virt-installs/ks.cfg \
+--extra-args "inst.ks=file:/ks.cfg"
+```
+
 # Fedora
 
 ## If I want to try beta:
 
 ```
-virt-install --name Fedora32 \
---description 'Fedora 32' \
+virt-install --name Fedora39 \
+--description 'Fedora 39' \
 --ram 4096 \
 --vcpus 2 \
---disk path=~/VirtualMachines/f32.qcow2,size=20 \
+--disk path=~/VirtualMachines/f39.qcow2,size=20 \
 --os-type linux \
 --os-variant fedora30 \
 --network bridge=virbr0 \
 --graphics vnc,listen=127.0.0.1,port=5901 \
---cdrom ~/VirtualMachines/Fedora-Workstation-Live-x86_64-32_Beta-1.2.iso \
+--cdrom ~/VirtualMachines/Fedora-Workstation-Live-x86_64-39_Beta-1.2.iso \
 --noautoconsole
 ```
 
 ## Stable:
 
 ```
-virt-install --name Fedora32 \
---description 'Fedora 32' \
+virt-install --name Fedora39 \
+--description 'Fedora 39' \
 --ram 4096 \
 --vcpus 2 \
---disk path=~/VirtualMachines/f32.qcow2,size=20 \
+--disk path=~/VirtualMachines/f39.qcow2,size=20 \
 --os-type linux \
 --os-variant fedora30 \
 --network bridge=virbr0 \
 --graphics vnc,listen=127.0.0.1,port=5901 \
--l http://ftp.funet.fi/pub/linux/mirrors/fedora/linux/releases/32/Server/x86_64/os/ \
--x "ks=https://raw.githubusercontent.com/ikke-t/virt-installs/master/ks-f31.cfg" \
+-l http://ftp.funet.fi/pub/linux/mirrors/fedora/linux/releases/39/Server/x86_64/os/ \
+-x "inst.ks=https://raw.githubusercontent.com/ikke-t/virt-installs/master/ks-f39.cfg" \
 --noautoconsole
 ```
 
 ## With serial console:
 
 ```
-virt-install --name Fedora32 \
---description 'Fedora 32' \
+virt-install --name Fedora39 \
+--description 'Fedora 39' \
 --ram 4096 \
 --vcpus 2 \
---disk path=~/VirtualMachines/f32.qcow2,size=20 \
+--disk path=~/VirtualMachines/f39.qcow2,size=20 \
 --os-type linux \
 --os-variant fedora30 \
 --network bridge=virbr0 \
 --graphics none \
 --serial pty \
 --console pty,target.type=virtio \
--l http://ftp.funet.fi/pub/linux/mirrors/fedora/linux/releases/32/Server/x86_64/os/ \
--x "ks=https://raw.githubusercontent.com/ikke-t/virt-installs/master/ks-f31.cfg console=tty0 console=ttyS0,115200n8"
+-l http://ftp.funet.fi/pub/linux/mirrors/fedora/linux/releases/39/Server/x86_64/os/ \
+-x "inst.ks=https://raw.githubusercontent.com/ikke-t/virt-installs/master/ks-f39.cfg console=tty0 console=ttyS0,115200n8"
 ```
 
 # CentOS 8
@@ -119,7 +129,7 @@ virt-install --name rhel8 \
 --serial pty \
 --console pty,target.type=virtio \
 -l http://download-node-02.eng.bos.redhat.com/rhel-8/rel-eng/RHEL-8/latest-RHEL-8/compose/BaseOS/x86_64/os/ \
--x "ks=https://github.com/ikke-t/virt-installs/raw/master/ks-rhel8.cfg console=tty0 console=ttyS0,115200n8"
+-x "inst.ks=https://github.com/ikke-t/virt-installs/raw/master/ks-rhel8.cfg console=tty0 console=ttyS0,115200n8"
 ```
 
 # RHEL8-Edge
@@ -145,7 +155,7 @@ virt-install --name rhel-edge \
   --os-variant rhel8.3 \
   --location http://download-node-02.eng.bos.redhat.com/rhel-8/rel-eng/RHEL-8/latest-RHEL-8/compose/BaseOS/x86_64/os/ \
   --initrd-inject=/home/ikke/rhel-iot/ks.cfg \
-  --extra-args="ks=file:/ks.cfg console=tty0 console=ttyS0,115200n8"
+  --extra-args="inst.ks=file:/ks.cfg console=tty0 console=ttyS0,115200n8"
 ```
 
 After install of edge I typically switch it into virbr0 network. I noticed
