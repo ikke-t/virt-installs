@@ -41,6 +41,10 @@ sometimes, for such have such lines at the end:
 
 # Fedora
 
+For CoreOS,
+[see their commands](https://docs.fedoraproject.org/en-US/fedora-coreos/provisioning-libvirt/).
+for the others see below.
+
 ## If I want to try beta:
 
 ```
